@@ -21,7 +21,7 @@ class HeadHunter(Engine):
             raise ParsingError
         return response.json()['items']
 
-    def get_offers(self, pages_count=10):
+    def get_offers(self, pages_count=5):
         while self.__params['page'] < pages_count:
             print(f"HeadHunter: получаем данные - страница {self.__params['page'] + 1}", end=": ")
             try:
