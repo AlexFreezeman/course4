@@ -8,9 +8,6 @@ def main():
     keyword = "Python"
 
     hh = HeadHunter(keyword)
-#    hh.get_offers()
-#    offers_json.extend(hh.get_formatted_offers())
-#    print(offers_json)
     sj = SuperJob(keyword)
     for api in (hh, sj):
         api.get_offers(pages_count=5)
