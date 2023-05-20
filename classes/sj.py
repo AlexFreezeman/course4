@@ -6,6 +6,9 @@ from classes.utils import ParsingError
 
 
 class SuperJob(Engine):
+    """
+    класс для работы с сайтом SuperJob
+    """
     def __init__(self, keyword):
         self.__header = {"X-Api-App-Id": os.environ["SJ_API_KEY"]}
         self.__params = {
