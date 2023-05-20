@@ -10,7 +10,7 @@ def main():
     hh = HeadHunter(keyword)
     sj = SuperJob(keyword)
     for api in (hh, sj):
-        api.get_offers(pages_count=1)
+        api.get_offers(pages_count=5)
         offers_json.extend(api.get_formatted_offers())
 
     connector = Connector(keyword=keyword, offers_json=offers_json)
