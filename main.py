@@ -1,6 +1,6 @@
 from classes.hh import HeadHunter
 from classes.sj import SuperJob
-from classes.utils import Connector, Offer
+from classes.utils import Connector
 
 
 def main():
