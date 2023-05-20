@@ -24,11 +24,21 @@ class Connector:
                   in data]
         return offers
 
+    def sort_min_offers_desc(self):
+        offers = self.select()
+        offers = sorted(offers, reverse=True)
+        return offers
+
+    def sort_min_offers_asc(self):
+        offers = self.select()
+        offers = sorted(offers)
+        return offers
+
 
 class Offer:
     __slots__ = ('id', 'title', 'url', 'salary_min', 'salary_max', 'employer', 'api')
 
-    def __init__(self, offer_id, title, url, salary_min, salary_max, employer, api):
+    def __init__(self, offer_id, title: str, url: str, salary_min: int, salary_max: int, employer: str, api: str):
         self.id = offer_id
         self.title = title
         self.url = url
@@ -44,4 +54,9 @@ class Offer:
             salary_min = "Не указана"
         return f'Вакансия: \"{self.title}\" \nКомпания: \"{self.employer}\" \nЗарплата: {salary_min} {salary_max} \nURL: {self.url}'
 
-
+    def __gt__(self, other):
+        if not other.salary_min:
+            return True
+        elif not self.salary_min:
+            return False
+        return self.salary_min >= other.salary_min
