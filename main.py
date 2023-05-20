@@ -5,16 +5,19 @@ from classes.utils import Connector
 
 def main():
     offers_json = []
-    keyword = "Python"
+    keyword = input("Введите ключевое слово, по которому пройдёт поиск: \n")
 
+    # поиск вакансий по ключевому слову и запись в json
     hh = HeadHunter(keyword)
     sj = SuperJob(keyword)
     for api in (hh, sj):
         api.get_offers(pages_count=5)
         offers_json.extend(api.get_formatted_offers())
 
+    # соединяем воедино
     connector = Connector(keyword=keyword, offers_json=offers_json)
 
+    # вывод опций для пользователя
     while True:
         command = input(
             "1 - Вывести список вакансий;\n"

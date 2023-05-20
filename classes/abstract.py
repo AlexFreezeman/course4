@@ -2,7 +2,9 @@ from abc import ABC, abstractmethod
 
 
 class Engine(ABC):
-
+    """
+    абстрактный класс
+    """
     @abstractmethod
     def get_request(self):
         pass

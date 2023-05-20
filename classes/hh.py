@@ -4,6 +4,9 @@ from classes.utils import ParsingError
 
 
 class HeadHunter(Engine):
+    """
+    класс для работы с hh.ru
+    """
     def __init__(self, keyword):
         self.__header = None
         self.__params = {
@@ -14,6 +17,9 @@ class HeadHunter(Engine):
         self.__offers = []
 
     def get_request(self):
+        """
+        получение данных с api
+        """
         response = requests.get('https://api.hh.ru/vacancies',
                                 headers=self.__header,
                                 params=self.__params)
@@ -22,18 +28,24 @@ class HeadHunter(Engine):
         return response.json()['items']
 
     def get_offers(self, pages_count=5):
+        """
+        парсинг данных с сайта и запись их в список
+        """
         while self.__params['page'] < pages_count:
             print(f"HeadHunter: получаем данные - страница {self.__params['page'] + 1}", end=": ")
             try:
                 values = self.get_request()
             except ParsingError:
-                print('Ошибка получаения данных!')
+                print('Ошибка получения данных!')
                 break
             print(f"Найдено ({len(values)}) вакансий.")
             self.__offers.extend(values)
             self.__params['page'] += 1
 
     def get_formatted_offers(self):
+        """
+        форматирование списка (вычленение отображаемых полей)
+        """
         formatted_offers = []
         for offer in self.__offers:
             salary_min, salary_max = self.get_salary(offer['salary'])
@@ -50,10 +62,13 @@ class HeadHunter(Engine):
 
     @staticmethod
     def get_salary(salary):
+        """
+        обработка зарплаты
+        """
         formatted_salary = [None, None]
         if salary and salary['from'] and salary['from'] != 0:
-            formatted_salary[0] = salary['from'] if salary['currency'].lower() == 'rur' else salary['from'] * 78
+            formatted_salary[0] = salary['from'] if salary['currency'].lower() == 'rur' else salary['from'] * 75
         if salary and salary['to'] and salary['to'] != 0:
-            formatted_salary[1] = salary['to'] if salary['currency'].lower() == 'rur' else salary['to'] * 78
+            formatted_salary[1] = salary['to'] if salary['currency'].lower() == 'rur' else salary['to'] * 75
         return formatted_salary
 
